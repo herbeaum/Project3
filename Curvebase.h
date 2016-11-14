@@ -29,10 +29,10 @@ public:
     double y(double s);
     virtual ~Curvebase();
 private:
-	double integrate(double (*f)(double), double a, double b, double tol);
+    double integrate(double (*f)(double), double a, double b, double tol);
     double Newton(double (*f)(double),double (*df)(double),double x,double pres);
     double iFunc(double (*f)(double), double a, double b);
-	double i2Func(double (*f)(double), double a, double b);
+    double i2Func(double (*f)(double), double a, double b);
 
 };
 

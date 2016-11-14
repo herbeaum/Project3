@@ -6,6 +6,7 @@
  */
 
 #include "Curvebase.h"
+using namespace std;
 
 Curvebase::Curvebase(const Curvebase& orig) {
 }
@@ -57,7 +58,7 @@ double Curvebase::integrate(double (*f)(double), double a, double b, double tol)
 		// Inner loop
 		for (int i = 0 ; i < nodeCount ; i++) {
 			if (!doneChildren[i]) {
-				// Inreval is not already done
+				// Interval is not already done
 				// from and to correspond to the bounds of the subinterval
 				double from = a + i * subInterval;
 				double to = from + subInterval;
