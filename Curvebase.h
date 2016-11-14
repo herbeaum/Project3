@@ -7,7 +7,7 @@
 
 #ifndef CURVEBASE_H
 #define	CURVEBASE_H
-
+#include <stdexcept>
 class Curvebase {
 protected:
     double pmin;
@@ -30,9 +30,10 @@ public:
     virtual ~Curvebase();
 private:
     double integrate(double (*f)(double), double a, double b, double tol);
-    double Newton(double (*f)(double),double (*df)(double),double x,double pres);
+    double Newton(double (*f)(double,double),double (*df)(double),double s,double x,double pres);
     double iFunc(double (*f)(double), double a, double b);
     double i2Func(double (*f)(double), double a, double b);
+    double f_p(double p, double s);
 
 };
 

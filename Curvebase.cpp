@@ -5,6 +5,8 @@
  * Created on November 7, 2016, 2:41 PM
  */
 
+
+
 #include "Curvebase.h"
 using namespace std;
 
@@ -14,13 +16,14 @@ Curvebase::Curvebase(const Curvebase& orig) {
 Curvebase::~Curvebase() {
 }
 
-double Curvebase::Newton(double (*f)(double),double (*df)(double),double x,double pres){
+double Curvebase::Newton(double (*f)(double,double),double (*df)(double),double s,double p,double pres){
     double err, tol =pres, x1;
+    double x=p;
     int it, maxit=100;
     it =0;
     err =tol +1;
     while (err > tol && it < maxit ){
-        x1 = x -f(x)/df(x);
+        x1 = x -f(x,s)/df(x);
         err =fabs(x1-x);
         x=x1; 
         it++;
@@ -122,4 +125,27 @@ double Curvebase::i2Func(double (*f)(double), double a, double b) {
 
 double Curvebase::f(double q){
     return sqrt(dxp(q)*dxp(q)+dyp(q)+dyp(q));
+}
+
+
+double Curvebase::f_p(double p, double s){
+    return integrate(f,a,p)-s*length;
+}
+
+
+
+double Curvebase::x(double s){
+    if ((s<0)||(s>1)) {
+        throw std::invalid_argument("s in [0,1]");
+    }
+    double p = Newton(f_p,f,s,(a+b)/2,1e-6);
+    return xp(p);
+}
+
+double Curvebase::y(double s){
+    if ((s<0)||(s>1)) {
+        throw std::invalid_argument("s in [0,1]");
+    }
+    double p = Newton(f_p,f,s,(a+b)/2,1e-6);
+    return yp(p);
 }
