@@ -16,7 +16,7 @@ Curvebase::Curvebase(const Curvebase& orig) {
 Curvebase::~Curvebase() {
 }
 
-double Newton(double (*f)(double),double (*df)(double),double x,double pres){
+double Curvebase::Newton(double (*f)(double),double (*df)(double),double x,double pres){
     double err, tol =pres, x1;
     int it, maxit=100;
     it =0;
@@ -36,6 +36,6 @@ double Newton(double (*f)(double),double (*df)(double),double x,double pres){
 
 
 
-double f(double q){
+double Curvebase::f(double q){
     return sqrt(dxp(q)*dxp(q)+dyp(q)+dyp(q));
 }
