@@ -7,9 +7,6 @@
 
 #include "Curvebase.h"
 
-Curvebase::Curvebase() {
-}
-
 Curvebase::Curvebase(const Curvebase& orig) {
 }
 

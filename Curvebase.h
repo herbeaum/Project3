@@ -23,7 +23,7 @@ protected:
     double integrate (double a, double b);
     double f(double q);
 public:
-    Curvebase();
+    Curvebase():pmin(0.0),pmax(0.0),a(0.0),b(0.0),rev(0.0),length(0.0){};
     Curvebase(const Curvebase& orig);
     double x(double s);
     double y(double s);
