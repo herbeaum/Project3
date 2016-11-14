@@ -20,8 +20,8 @@ protected:
     virtual double yp(double p) = 0;
     virtual double dxp(double p) = 0;
     virtual double dyp(double p) = 0;
-    double integrate (double a, double b);
     double f(double q);
+    double integrate(double (*f)(double), double a, double b);
 public:
     Curvebase();
     Curvebase(const Curvebase& orig);
@@ -29,8 +29,10 @@ public:
     double y(double s);
     virtual ~Curvebase();
 private:
+	double integrate(double (*f)(double), double a, double b, double tol);
     double Newton(double (*f)(double),double (*df)(double),double x,double pres);
-    
+    double iFunc(double (*f)(double), double a, double b);
+	double i2Func(double (*f)(double), double a, double b);
 
 };
 
