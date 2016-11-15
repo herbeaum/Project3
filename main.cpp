@@ -15,8 +15,12 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    Curve *c=new Curve(1);
-    std::cout<<(c->x(0.1));
+//    Line c(false, 5, 1, 4, 1);
+    Curve c(1);
+	double testS = 0;
+	cout << "For s = " << testS << endl;
+	cout << "x = " << c.x(0) << endl;
+	cout << "y = " << c.y(0) << endl;
 
     return 0;
 }

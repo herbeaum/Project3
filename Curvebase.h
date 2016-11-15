@@ -31,6 +31,9 @@ public:
     double x(double s);
     double y(double s);
     virtual ~Curvebase();
+	/**/
+	double getLength() {return length;}
+	/**/
 private:
     double integrate( double a, double b, double tol);
     double Newton(double s,double x,double pres);

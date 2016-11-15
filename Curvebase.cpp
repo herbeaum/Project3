@@ -125,7 +125,7 @@ double Curvebase::i2Func( double a, double b) {
 }
 
 double Curvebase::f(double q){
-    return sqrt(dxp(q)*dxp(q)+dyp(q)+dyp(q));
+    return sqrt(dxp(q)*dxp(q)+dyp(q)*dyp(q));
 }
 
 

@@ -17,7 +17,7 @@ Curve::Curve(int rev){
     this->a=-10;
     this->b=5;
     this->rev=rev;
-    length=integrate(f,a,b);
+    length=integrate(a,b);
 }
 
 
