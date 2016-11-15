@@ -16,7 +16,7 @@ Line::Line(bool vert,double coord,double a,double b,int rev){
     this->a=a;
     this->b=b;
     this->rev=rev;
-    length=integrate(f,a,b);
+    length=integrate(a,b);
 }
 
 Line::Line(const Line& orig) {
