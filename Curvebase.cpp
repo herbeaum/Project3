@@ -17,14 +17,14 @@ Curvebase::Curvebase(const Curvebase& orig) {
 Curvebase::~Curvebase() {
 }
 
-double Curvebase::Newton(double (*f)(double,double),double (*df)(double),double s,double p,double pres){
+double Curvebase::Newton(double s,double p,double pres){
     double err, tol =pres, x1;
     double x=p;
     int it, maxit=100;
     it =0;
     err =tol +1;
     while (err > tol && it < maxit ){
-        x1 = x -f(x,s)/df(x);
+        x1 = x -f_p(x,s)/f(x);
         err =fabs(x1-x);
         x=x1; 
         it++;
@@ -35,11 +35,11 @@ double Curvebase::Newton(double (*f)(double,double),double (*df)(double),double 
     return x1;
 }
 
-double Curvebase::integrate(double (*f)(double), double a, double b) {
-	integrate(f, a, b, 1e-8);
+double Curvebase::integrate( double a, double b) {
+	integrate( a, b, 1e-8);
 }
 
-double Curvebase::integrate(double (*f)(double), double a, double b, double tol) {
+double Curvebase::integrate( double a, double b, double tol) {
 	// Arguments check
 	if (tol <= 0) {
 		throw invalid_argument("The given tolerance value is not strictly positive!");
@@ -66,8 +66,8 @@ double Curvebase::integrate(double (*f)(double), double a, double b, double tol)
 				// from and to correspond to the bounds of the subinterval
 				double from = a + i * subInterval;
 				double to = from + subInterval;
-				double i1 = iFunc(f, from, to);
-				double i2 = i2Func(f, from, to);
+				double i1 = iFunc( from, to);
+				double i2 = i2Func( from, to);
 				if (abs(i1 - i2) >= 15 * tol) {
 					// Need to go to next iteration to split this interval
 					// in two and compute i1 and i2 for each subinterval,
@@ -111,7 +111,7 @@ double Curvebase::integrate(double (*f)(double), double a, double b, double tol)
 // A function that takes two doubles and returns
 // some sort of weighted average of the function
 // over the interval between these two doubles
-double Curvebase::iFunc(double (*f)(double), double a, double b) {
+double Curvebase::iFunc( double a, double b) {
 	return (b - a) * (f(a) + 4 * f((a + b) / 2) + f(b)) / 6;
 }
 
@@ -119,9 +119,9 @@ double Curvebase::iFunc(double (*f)(double), double a, double b) {
 // sum of the results of calling the function iFunc
 // over the two halves of the interval between
 // these two doubles
-double Curvebase::i2Func(double (*f)(double), double a, double b) {
+double Curvebase::i2Func( double a, double b) {
 	double gamma = (a + b) / 2;
-	return iFunc(f, a, gamma) + iFunc(f, gamma, b);
+	return iFunc( a, gamma) + iFunc( gamma, b);
 }
 
 double Curvebase::f(double q){
@@ -130,7 +130,7 @@ double Curvebase::f(double q){
 
 
 double Curvebase::f_p(double p, double s){
-    return integrate(f,a,p)-s*length;
+    return integrate(a,p)-s*length;
 }
 
 
@@ -139,7 +139,7 @@ double Curvebase::x(double s){
     if ((s<0)||(s>1)) {
         throw std::invalid_argument("s in [0,1]");
     }
-    double p = Newton(f_p,f,s,(a+b)/2,1e-6);
+    double p = Newton(s,(a+b)/2,1e-6);
     return xp(p);
 }
 
@@ -147,6 +147,6 @@ double Curvebase::y(double s){
     if ((s<0)||(s>1)) {
         throw std::invalid_argument("s in [0,1]");
     }
-    double p = Newton(f_p,f,s,(a+b)/2,1e-6);
+    double p = Newton(s,(a+b)/2,1e-6);
     return yp(p);
 }

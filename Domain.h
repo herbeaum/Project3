@@ -7,7 +7,7 @@
 
 #ifndef DOMAIN_H
 #define	DOMAIN_H
-
+#include "Curvebase.h"
 class Domain {
 public:
     Domain();
