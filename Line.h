@@ -11,7 +11,7 @@
 class Line: public Curvebase{
 public:
     Line();
-    Line(bool vert,double coord,double a,double b, double pmin,double pmax,int rev);
+    Line(bool vert,double coord,double a,double b,int rev);
     Line(const Line& orig);
     virtual ~Line();
     

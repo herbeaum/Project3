@@ -8,10 +8,13 @@
 #ifndef CURVEBASE_H
 #define	CURVEBASE_H
 #include <stdexcept>
+#include <math.h> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+
 class Curvebase {
 protected:
-    double pmin;
-    double pmax;
     double a;
     double b;
     int rev;
@@ -23,7 +26,7 @@ protected:
     double f(double q);
     double integrate(double (*f)(double), double a, double b);
 public:
-    Curvebase():pmin(0.0),pmax(0.0),a(0.0),b(0.0),rev(0.0),length(0.0){};
+    Curvebase():a(0.0),b(0.0),rev(0.0),length(0.0){};
     Curvebase(const Curvebase& orig);
     double x(double s);
     double y(double s);

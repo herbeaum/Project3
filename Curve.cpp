@@ -13,11 +13,9 @@ Curve::Curve() {
 Curve::Curve(const Curve& orig) {
 }
 
-Curve::Curve(double a,double b, double pmin,double pmax,int rev){
-    this->a=a;
-    this->b=b;
-    this->pmin=pmin;
-    this->pmax=pmax;
+Curve::Curve(int rev){
+    this->a=-10;
+    this->b=5;
     this->rev=rev;
     length=integrate(f,a,b);
 }
@@ -27,16 +25,16 @@ Curve::~Curve() {
 }
 
 
-virtual double Curve::xp(double p){
+ double Curve::xp(double p){
     return p;
 }
 
-virtual double Line::dxp(double p){
+ double Curve::dxp(double p){
     return 1;
 }
 
 
-virtual double Line::yp(double p){
+ double Curve::yp(double p){
     if (p>=-10 && p<-3){
         return 1/(2*(1+exp(-3*(p+6))));
     }else if (p>=-3 && p<=5){
@@ -46,7 +44,7 @@ virtual double Line::yp(double p){
     }
 }
 
-virtual double Line::dyp(double p){
+ double Curve::dyp(double p){
      if (p>=-10 && p<-3){
         return (3*exp(-3*(p+6)))/(2*(1+exp(-3*(p+6))));
     }else if (p>=-3 && p<=5){

@@ -8,6 +8,7 @@
 
 
 #include "Curvebase.h"
+
 using namespace std;
 
 Curvebase::Curvebase(const Curvebase& orig) {
@@ -29,7 +30,7 @@ double Curvebase::Newton(double (*f)(double,double),double (*df)(double),double 
         it++;
     }
     if (err>tol ){
-        std::cout << "error, no convergence"<<std::endl;
+        cout << "error, no convergence"<<endl;
     }
     return x1;
 }
