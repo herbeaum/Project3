@@ -35,21 +35,22 @@ Curve::~Curve() {
 
 
  double Curve::yp(double p){
-    if (p>=-10 && p<-3){
+	if (p>=-10 && p<-3){
         return 1/(2*(1+exp(-3*(p+6))));
     }else if (p>=-3 && p<=5){
         return 1/(2*(1+exp(3*p)));
     }else {
-        throw invalid_argument(" p out of bounds");
+        throw invalid_argument("p out of bounds");
     }
 }
 
  double Curve::dyp(double p){
-     if (p>=-10 && p<-3){
+	cout << "p = " << p << endl;
+	if (p>=-10 && p<-3){
         return (3*exp(-3*(p+6)))/(2*(1+exp(-3*(p+6))));
     }else if (p>=-3 && p<=5){
         return -3*exp(3*p)/(2*(1+exp(3*p)));
     }else {
-        throw invalid_argument(" p out of bounds");
+        throw invalid_argument("p out of bounds");
     }
 }

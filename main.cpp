@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
 	cout << "For s = " << testS << endl;
 	cout << "x = " << c.x(0) << endl;
 	cout << "y = " << c.y(0) << endl;
+//	cout << "integral = " << c.getLength() << endl;
 
     return 0;
 }

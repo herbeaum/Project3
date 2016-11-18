@@ -140,6 +140,7 @@ double Curvebase::x(double s){
         throw std::invalid_argument("s in [0,1]");
     }
     double p = Newton(s,(a+b)/2,1e-6);
+	cout << "px = " << p << endl;
     return xp(p);
 }
 
@@ -148,5 +149,6 @@ double Curvebase::y(double s){
         throw std::invalid_argument("s in [0,1]");
     }
     double p = Newton(s,(a+b)/2,1e-6);
+	cout << "py = " << p << endl;
     return yp(p);
 }
