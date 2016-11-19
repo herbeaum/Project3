@@ -8,17 +8,32 @@
 #ifndef DOMAIN_H
 #define	DOMAIN_H
 #include "Curvebase.h"
+#include "Point.h"
+#include <cstdio>
+#include <iostream>
+#include <cstdint>
+
 class Domain {
 public:
-    Domain();
+
     Domain(const Domain& orig);
-    Domain(const Curvebase & c1,const Curvebase & c2,const Curvebase & c3,const Curvebase & c4);
+    Domain(Curvebase & c1, Curvebase & c2, Curvebase & c3, Curvebase & c4);
+    Domain(Domain && d) noexcept;
     void generating_grid(int m, int n);
-    virtual ~Domain();
-private:
-    Curvebase *sides[4];
-    int m_,n_;
+    ~Domain();
+    Domain &operator=(const Domain &d);
+    Domain &operator=(Domain &&d) noexcept;
+    Point operator()(int i, int j) const;
     double *X_, *Y_;
+private:
+
+    Curvebase *sides[4];
+    int m_, n_;
+
+    bool check_consistency()const;
+    double phi1(double p)const;
+    double phi2(double p)const;
+
 };
 
 #endif	/* DOMAIN_H */

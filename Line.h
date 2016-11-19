@@ -21,7 +21,7 @@ public:
     virtual double dyp(double p);
 private:
     bool vertical;
-    double x;
+    double x1;
 
 };
 

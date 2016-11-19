@@ -4,15 +4,158 @@
  * 
  * Created on November 7, 2016, 2:47 PM
  */
-
+#include <cstdio>
+#include <iostream>
+#include <string.h>
 #include "Domain.h"
+using namespace std;
 
-Domain::Domain() {
+Domain::Domain(Curvebase & c1, Curvebase & c2, Curvebase & c3, Curvebase & c4) {
+    sides[0] = &c1;
+    sides[1] = &c2;
+    sides[2] = &c3;
+    sides[3] = &c4;
+    m_ = 0;
+    n_ = 0;
+    //if (~check_consistency()) {
+    //  m_ = n_ = 0;
+    //X_ = Y_ = 0;
+    //sides[0] = sides[1] = sides[2] = sides[3] = NULL;
+    //}
 }
 
-Domain::Domain(const Domain& orig) {
+Domain::Domain(const Domain& orig) : m_(orig.m_), n_(orig.n_), X_(NULL), Y_(NULL) {
+    if (this == &orig) {
+        throw std::invalid_argument("ERROR: Copy constructor on itself");
+    }
+    if (m_ > 0) {
+        X_ = new double[(m_ + 1)*(n_ + 1)];
+        Y_ = new double[(m_ + 1)*(n_ + 1)];
+        memcpy(X_, orig.X_, (m_ + 1)*(n_ + 1) * sizeof (double));
+        memcpy(Y_, orig.Y_, (m_ + 1)*(n_ + 1) * sizeof (double));
+    }
+}
+
+Domain::Domain(Domain&& d) noexcept {
+    m_ = (d.m_), n_ = (d.n_), X_ = (d.X_), Y_ = (d.Y_);
+    d.m_ = 0;
+    d.n_ = 0;
+    d.X_ = NULL;
+    d.Y_ = NULL;
 }
 
 Domain::~Domain() {
+    if (m_ > 0) {
+        delete []X_;
+        delete []Y_;
+    }
+}
+
+void Domain::generating_grid(int m, int n) {
+    if (m <= 0 || n <= 0) {
+        throw invalid_argument("m or n can't be negative");
+    }
+    if (m_ > 0) { //there exists already a grid
+        delete [] X_;
+        delete [] Y_;
+    }
+    m_ = m;
+    n_ = n;
+    X_ = new double[(m_ + 1)*(n_ + 1)];
+    Y_ = new double[(m_ + 1)*(n_ + 1)];
+
+
+    double h1 = 1.0 / n_;
+    double h2 = 1.0 / m_;
+    //Fill x_ and Y_
+    for (int i = 0; i <= n_; i++) {
+        for (int j = 0; j <= m_; j++) {
+            X_[j + i * (m + 1)] = phi1(i * h1) * sides[3]->x(j * h2) //phi1(e1)x(0,e2)
+                    + phi2(i * h1) * sides[1]->x(j * h2)//phi2(e1)x(1,e2)
+                    + phi1(j * h2) * sides[0]->x(i * h1)//phi1(e2)x(e1,0)
+                    + phi2(j * h2) * sides[2]->x(i * h1)//phi2(e2)x(e1,1)
+                    - phi1(i * h1) * phi1(j * h2) * sides[0]->x(0)//phi1(e1)phi1(e2)x(0,0)
+                    - phi2(i * h1) * phi1(j * h2) * sides[0]->x(1)//phi2(e1)phi1(e2)x(1,0)
+                    - phi1(i * h1) * phi2(j * h2) * sides[2]->x(0)//phi1(e1)phi2(e2)x(0,1)
+                    - phi2(i * h1) * phi2(j * h2) * sides[2]->x(1); //phi2(e1)phi2(e1)x(1,1)
+            Y_[j + i * (m + 1)] = phi1(i * h1) * sides[3]->y(j * h2)
+                    + phi2(i * h1) * sides[1]->y(j * h2)
+                    + phi1(j * h2) * sides[0]->y(i * h1)
+                    + phi2(j * h2) * sides[2]->y(i * h1)
+                    - phi1(i * h1) * phi1(j * h2) * sides[0]->y(0)
+                    - phi2(i * h1) * phi1(j * h2) * sides[0]->y(1)
+                    - phi1(i * h1) * phi2(j * h2) * sides[2]->y(0)
+                    - phi2(i * h1) * phi2(j * h2) * sides[2]->y(1);
+
+        }
+    }
+
+}
+
+bool Domain::check_consistency() const {
+    return (true);
+}
+
+double Domain::phi1(double p)const {
+    return (1 - p);
+}
+
+double Domain::phi2(double p)const {
+    return p;
+}
+
+Domain & Domain::operator=(const Domain& d) {
+    if (this == &d) {
+        throw std::invalid_argument("ERROR: Copy operator on itself");
+    }
+    if (m_ == d.m_ && n_ == d.n_) {
+        memcpy(X_, d.X_, (m_ + 1)*(n_ + 1) * sizeof (double));
+        memcpy(Y_, d.Y_, (m_ + 1)*(n_ + 1) * sizeof (double));
+    } else {
+        if (m_ > 0) {
+            delete []X_;
+            delete []Y_;
+            X_ = Y_ = NULL;
+        }
+        m_ = d.m_;
+        n_ = d.n_;
+        if (m_ > 0) {
+            X_ = new double[(m_ + 1)*(n_ + 1)];
+            Y_ = new double[(m_ + 1)*(n_ + 1)];
+            memcpy(X_, d.X_, (m_ + 1)*(n_ + 1) * sizeof (double));
+            memcpy(Y_, d.Y_, (m_ + 1)*(n_ + 1) * sizeof (double));
+        }
+    }
+}
+
+Domain & Domain::operator=(Domain&& d) noexcept {
+    if (m_ == d.m_ && n_ == d.n_) {
+        X_ = d.X_;
+        Y_ = d.Y_;
+    } else {
+        if (m_ > 0) {
+            delete []X_;
+            delete []Y_;
+            X_ = Y_ = NULL;
+        }
+        m_ = d.m_;
+        n_ = d.n_;
+        if (m_ > 0) {
+            X_ = d.X_;
+            Y_ = d.Y_;
+        }
+    }
+    d.X_ = NULL;
+    d.Y_ = NULL;
+    d.m_ = 0;
+    d.n_ = 0;
+}
+
+Point Domain::operator()(int i, int j) const {
+    if (i < 0 || i > n_ || j < 0 || j > m_) {
+        throw invalid_argument(" i or j out of bounds");
+    }
+    int ind = j + i * (m_ + 1);
+    return Point(X_[ind], Y_[ind]);
 }
 

@@ -12,7 +12,7 @@ Line::Line() {
 
 Line::Line(bool vert,double coord,double a,double b,int rev){
     vertical=vert;
-    x=coord;
+    x1=coord;
     this->a=a;
     this->b=b;
     this->rev=rev;
@@ -27,7 +27,7 @@ Line::~Line() {
 
 double Line::xp(double p){
     if (vertical){
-        return x;
+        return x1;
     }else{
         return p;
     }
@@ -46,7 +46,7 @@ double Line::yp(double p){
     if (vertical){
         return p;
     }else{
-        return x;
+        return x1;
     }
 }
 
