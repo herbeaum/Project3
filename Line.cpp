@@ -7,8 +7,7 @@
 
 #include "Line.h"
 
-Line::Line() {
-}
+
 
 Line::Line(bool vert,double coord,double a,double b,int rev){
     vertical=vert;
@@ -20,6 +19,15 @@ Line::Line(bool vert,double coord,double a,double b,int rev){
 }
 
 Line::Line(const Line& orig) {
+    if (this == &orig) {
+        throw std::invalid_argument("ERROR: Copy constructor on itself");
+    }
+    a=orig.a;
+    b=orig.b;
+    rev=orig.rev;
+    x1=orig.x1;
+    vertical=orig.vertical;
+    length=orig.length;
 }
 
 Line::~Line() {

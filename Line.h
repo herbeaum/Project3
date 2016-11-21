@@ -10,7 +10,7 @@
 #include "Curvebase.h"
 class Line: public Curvebase{
 public:
-    Line();
+
     Line(bool vert,double coord,double a,double b,int rev);
     Line(const Line& orig);
     virtual ~Line();

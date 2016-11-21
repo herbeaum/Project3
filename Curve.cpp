@@ -8,15 +8,21 @@
 #include "Curve.h"
 using namespace std;
 
-Curve::Curve() {
-}
+
 
 Curve::Curve(const Curve& orig) {
+    if (this == &orig) {
+        throw std::invalid_argument("ERROR: Copy constructor on itself");
+    }
+    a=orig.a;
+    b=orig.b;
+    rev=orig.rev;
+    length=orig.length;
 }
 
-Curve::Curve(int rev) {
-    this->a = -10;
-    this->b = 5;
+Curve::Curve(double a, double b,int rev) {
+    this->a = a;
+    this->b = b;
     this->rev = rev;
     length = integrate(a, b);
 }
@@ -33,9 +39,9 @@ double Curve::dxp(double p) {
 }
 
 double Curve::yp(double p) {
-    if (p >= -10 && p<-3) {
+    if (p<-3) {
         return 1 / (2 * (1 + exp(-3 * (p + 6))));
-    } else if (p >= -3 && p <= 5) {
+    } else if (p >= -3 ) {
         return 1 / (2 * (1 + exp(3 * p)));
     } else {
         throw invalid_argument("p out of bounds");
@@ -43,9 +49,9 @@ double Curve::yp(double p) {
 }
 
 double Curve::dyp(double p) {
-    if (p >= -10 && p<-3) {
+    if ( p<-3) {
         return (3 * exp(-3 * (p + 6))) / (2 * (1 + exp(-3 * (p + 6)))*(1 + exp(-3 * (p + 6))));
-    } else if (p >= -3 && p <= 5) {
+    } else if (p >= -3) {
         return -3 * exp(3 * p) / ((2 * (1 + exp(3 * p)))*(1 + exp(3 * p)));
     } else {
         throw invalid_argument("p out of bounds");

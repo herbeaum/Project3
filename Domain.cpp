@@ -33,11 +33,17 @@ Domain::Domain(const Domain& orig) : m_(orig.m_), n_(orig.n_), X_(NULL), Y_(NULL
         Y_ = new double[(m_ + 1)*(n_ + 1)];
         memcpy(X_, orig.X_, (m_ + 1)*(n_ + 1) * sizeof (double));
         memcpy(Y_, orig.Y_, (m_ + 1)*(n_ + 1) * sizeof (double));
+        for (int i=0;i<4;i++){
+            sides[i]=orig.sides[i];
+        }
     }
 }
 
 Domain::Domain(Domain&& d) noexcept {
     m_ = (d.m_), n_ = (d.n_), X_ = (d.X_), Y_ = (d.Y_);
+    for (int i=0;i<4;i++){
+            sides[i]=d.sides[i];
+    }
     d.m_ = 0;
     d.n_ = 0;
     d.X_ = NULL;
@@ -126,6 +132,10 @@ Domain & Domain::operator=(const Domain& d) {
             memcpy(Y_, d.Y_, (m_ + 1)*(n_ + 1) * sizeof (double));
         }
     }
+    for (int i=0;i<4;i++){
+            sides[i]=d.sides[i];
+    }
+    
 }
 
 Domain & Domain::operator=(Domain&& d) noexcept {
@@ -149,6 +159,9 @@ Domain & Domain::operator=(Domain&& d) noexcept {
     d.Y_ = NULL;
     d.m_ = 0;
     d.n_ = 0;
+    for (int i=0;i<4;i++){
+        sides[i]=d.sides[i];
+    }
 }
 
 Point Domain::operator()(int i, int j) const {
@@ -159,3 +172,15 @@ Point Domain::operator()(int i, int j) const {
     return Point(X_[ind], Y_[ind]);
 }
 
+void Domain::print(const std::string& str) const {
+    ofstream file(str.c_str(), ios::out);
+    if (file) {
+        file << "X;Y;"<<endl;
+        for (int i = 0; i < (n_ + 1)*(m_+1); i++) {
+            file<<X_[i]<<";"<<Y_[i]<<";"<<endl;
+        }
+        file.close();
+    }else{
+        cerr << "Impossible to open the file !" << endl;
+    }
+}

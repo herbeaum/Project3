@@ -12,10 +12,13 @@
 #include <cstdio>
 #include <iostream>
 #include <cstdint>
+#include <string>
+#include <fstream>
 
 class Domain {
+    
 public:
-
+    
     Domain(const Domain& orig);
     Domain(Curvebase & c1, Curvebase & c2, Curvebase & c3, Curvebase & c4);
     Domain(Domain && d) noexcept;
@@ -24,9 +27,11 @@ public:
     Domain &operator=(const Domain &d);
     Domain &operator=(Domain &&d) noexcept;
     Point operator()(int i, int j) const;
-    double *X_, *Y_;
+    void print(std::string const &str) const;
+    
 private:
-
+    
+    double *X_, *Y_;
     Curvebase *sides[4];
     int m_, n_;
 
