@@ -38,6 +38,8 @@ Domain::Domain(const Domain& orig) : m_(orig.m_), n_(orig.n_), X_(NULL), Y_(NULL
         throw std::invalid_argument("ERROR: Copy constructor on itself");
     }
     if (m_ > 0) {
+        x00=orig.x00, x01=orig.x01, x20=orig.x20, x21=orig.x21;
+        y00=orig.y00, y01=orig.y01, y20=orig.x20, y21=orig.x21;
         X_ = new double[(m_ + 1)*(n_ + 1)];
         Y_ = new double[(m_ + 1)*(n_ + 1)];
         memcpy(X_, orig.X_, (m_ + 1)*(n_ + 1) * sizeof (double));
@@ -50,6 +52,8 @@ Domain::Domain(const Domain& orig) : m_(orig.m_), n_(orig.n_), X_(NULL), Y_(NULL
 
 Domain::Domain(Domain&& d) noexcept {
     m_ = (d.m_), n_ = (d.n_), X_ = (d.X_), Y_ = (d.Y_);
+    x00=d.x00, x01=d.x01, x20=d.x20, x21=d.x21;
+    y00=d.y00, y01=d.y01, y20=d.x20, y21=d.x21;
     for (int i=0;i<4;i++){
             sides[i]=d.sides[i];
     }
@@ -140,6 +144,8 @@ Domain & Domain::operator=(const Domain& d) {
             memcpy(Y_, d.Y_, (m_ + 1)*(n_ + 1) * sizeof (double));
         }
     }
+    x00=d.x00, x01=d.x01, x20=d.x20, x21=d.x21;
+    y00=d.y00, y01=d.y01, y20=d.x20, y21=d.x21;
     for (int i=0;i<4;i++){
             sides[i]=d.sides[i];
     }
@@ -147,6 +153,8 @@ Domain & Domain::operator=(const Domain& d) {
 }
 
 Domain & Domain::operator=(Domain&& d) noexcept {
+    x00=d.x00, x01=d.x01, x20=d.x20, x21=d.x21;
+    y00=d.y00, y01=d.y01, y20=d.x20, y21=d.x21;
     if (m_ == d.m_ && n_ == d.n_) {
         X_ = d.X_;
         Y_ = d.Y_;
