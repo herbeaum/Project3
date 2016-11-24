@@ -17,6 +17,15 @@ Domain::Domain(Curvebase & c1, Curvebase & c2, Curvebase & c3, Curvebase & c4) {
     sides[3] = &c4;
     m_ = 0;
     n_ = 0;
+    
+    x00=sides[0]->x(0);
+    x01=sides[0]->x(1);
+    x20=sides[2]->x(0);
+    x21=sides[2]->x(1);
+    y00=sides[0]->y(0);
+    y01=sides[0]->y(1);
+    y20=sides[2]->y(0);
+    y21=sides[2]->y(1);
     //if (~check_consistency()) {
     //  m_ = n_ = 0;
     //X_ = Y_ = 0;
@@ -69,8 +78,7 @@ void Domain::generating_grid(int m, int n) {
     n_ = n;
     X_ = new double[(m_ + 1)*(n_ + 1)];
     Y_ = new double[(m_ + 1)*(n_ + 1)];
-
-
+    
     double h1 = 1.0 / n_;
     double h2 = 1.0 / m_;
     //Fill x_ and Y_
@@ -80,18 +88,18 @@ void Domain::generating_grid(int m, int n) {
                     + phi2(i * h1) * sides[1]->x(j * h2)//phi2(e1)x(1,e2)
                     + phi1(j * h2) * sides[0]->x(i * h1)//phi1(e2)x(e1,0)
                     + phi2(j * h2) * sides[2]->x(i * h1)//phi2(e2)x(e1,1)
-                    - phi1(i * h1) * phi1(j * h2) * sides[0]->x(0)//phi1(e1)phi1(e2)x(0,0)
-                    - phi2(i * h1) * phi1(j * h2) * sides[0]->x(1)//phi2(e1)phi1(e2)x(1,0)
-                    - phi1(i * h1) * phi2(j * h2) * sides[2]->x(0)//phi1(e1)phi2(e2)x(0,1)
-                    - phi2(i * h1) * phi2(j * h2) * sides[2]->x(1); //phi2(e1)phi2(e1)x(1,1)
+                    - phi1(i * h1) * phi1(j * h2) * x00//phi1(e1)phi1(e2)x(0,0)
+                    - phi2(i * h1) * phi1(j * h2) * x01//phi2(e1)phi1(e2)x(1,0)
+                    - phi1(i * h1) * phi2(j * h2) * x20//phi1(e1)phi2(e2)x(0,1)
+                    - phi2(i * h1) * phi2(j * h2) * x21; //phi2(e1)phi2(e1)x(1,1)
             Y_[j + i * (m + 1)] = phi1(i * h1) * sides[3]->y(j * h2)
                     + phi2(i * h1) * sides[1]->y(j * h2)
                     + phi1(j * h2) * sides[0]->y(i * h1)
                     + phi2(j * h2) * sides[2]->y(i * h1)
-                    - phi1(i * h1) * phi1(j * h2) * sides[0]->y(0)
-                    - phi2(i * h1) * phi1(j * h2) * sides[0]->y(1)
-                    - phi1(i * h1) * phi2(j * h2) * sides[2]->y(0)
-                    - phi2(i * h1) * phi2(j * h2) * sides[2]->y(1);
+                    - phi1(i * h1) * phi1(j * h2) * y00
+                    - phi2(i * h1) * phi1(j * h2) * y01
+                    - phi1(i * h1) * phi2(j * h2) * y20
+                    - phi2(i * h1) * phi2(j * h2) * y21;
 
         }
     }

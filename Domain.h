@@ -30,10 +30,11 @@ public:
     void print(std::string const &str) const;
     
 private:
-    
+   
     double *X_, *Y_;
     Curvebase *sides[4];
     int m_, n_;
+    double x00,x01,x20,x21,y00,y01,y20,y21;
 
     bool check_consistency()const;
     double phi1(double p)const;

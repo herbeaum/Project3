@@ -22,8 +22,8 @@ int main(int argc, char** argv) {
     Line L3(false,3,-10,5,1);
     Line L4(true,-10,0,3,1);
     Domain d(c1,L2,L3,L4);
-    int m=25;
-    int n=30;
+    int m=50;
+    int n=20;
     d.generating_grid(m,n);
     d.print("test.csv");
     return 0;
