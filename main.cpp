@@ -26,6 +26,7 @@ int main(int argc, char** argv) {
     int n=30;
     d.generating_grid(m,n);
     d.print("test.csv");
+	d.save();
     return 0;
 }
 

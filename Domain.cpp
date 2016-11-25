@@ -184,3 +184,21 @@ void Domain::print(const std::string& str) const {
         cerr << "Impossible to open the file !" << endl;
     }
 }
+
+void Domain::save() const {
+	FILE* p = fopen("domain.bin", "wb");
+	if (p == NULL) {
+		cerr << "Cannot create domain.bin file!" << endl;
+	}
+	char sizeOfInt = (char)sizeof(int);
+	char sizeOfDouble = (char)sizeof(double);
+	int m = m_ + 1;
+	int n = n_ + 1;
+	fwrite(&sizeOfInt, 1, 1, p);
+	fwrite(&sizeOfDouble, 1, 1, p);
+	fwrite(&m, sizeOfInt, 1, p);
+	fwrite(&n, sizeOfInt, 1, p);
+	fwrite(X_, sizeOfDouble, m * n, p);
+	fwrite(Y_, sizeOfDouble, m * n, p);
+	fclose(p);
+}

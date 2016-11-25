@@ -28,6 +28,7 @@ public:
     Domain &operator=(Domain &&d) noexcept;
     Point operator()(int i, int j) const;
     void print(std::string const &str) const;
+	void save() const;
     
 private:
     
