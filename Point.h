@@ -1,6 +1,6 @@
 /* 
  * File:   Point.h
- * Author: mickael
+ * Author: mickael/Raja
  *
  * Created on November 19, 2016, 10:27 AM
  */
@@ -12,12 +12,20 @@
 
 class Point {
 public:
-
+    /*
+     *Default constructor
+     */
     Point() : X(0.0), Y(0.0) {
     };
+    /*
+     *Constructor which takes 2 double as coordinates
+     */
     Point(double X, double Y);
+    /*
+     *Copy constructor
+     */
     Point(const Point& orig);
-    virtual ~Point();
+     ~Point();
 
     inline double getX() const {
         return X;
@@ -26,7 +34,7 @@ public:
     double getY() const {
         return Y;
     };
-    void print();
+
 private:
     double X;
     double Y;

@@ -1,6 +1,6 @@
 /* 
  * File:   main.cpp
- * Author: mickael
+ * Author: mickael/Raja
  *
  * Created on November 14, 2016, 2:07 PM
  */
@@ -13,9 +13,7 @@ using namespace std;
 #include "Line.h"
 #include "Domain.h"
 #include "Point.h"
-/*
- * 
- */
+
 int main(int argc, char** argv) {
     Curve c1(-10,5,1);
     Line L2(true, 5,0,3,1);
@@ -25,8 +23,7 @@ int main(int argc, char** argv) {
     int m=50;
     int n=20;
     d.generating_grid(m,n);
-    d.print("test.csv");
-	d.save();
+    d.save();
     return 0;
 }
 

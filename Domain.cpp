@@ -1,6 +1,6 @@
 /* 
  * File:   Domain.cpp
- * Author: mickael
+ * Author: mickael/Raja
  * 
  * Created on November 7, 2016, 2:47 PM
  */

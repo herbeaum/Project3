@@ -25,6 +25,3 @@ Point::Point(double X, double Y) {
 Point::~Point() {
 }
 
-void Point::print() {
-    cout << "(" << X << "," << Y << ") ; ";
-}
