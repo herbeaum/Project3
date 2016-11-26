@@ -21,9 +21,18 @@ Curve::Curve(const Curve& orig) {
 }
 
 Curve::Curve(double a, double b,int rev) {
-    this->a = a;
-    this->b = b;
-    this->rev = rev;
+    if (rev != 0 && rev !=1){
+        throw std::invalid_argument("ERROR: Invalid argument for rev \n rev=1 clockwise direction and 0 otherwise "); 
+    }
+    this->rev=rev;
+    if (a>b){
+        this->rev=1;
+        this->a=b;
+        this->b=a;
+    }else{
+        this->a=a;
+        this->b=b;
+    }
     length = integrate(a, b);
 }
 

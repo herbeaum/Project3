@@ -10,11 +10,20 @@
 
 
 Line::Line(bool vert,double coord,double a,double b,int rev){
+    if (rev != 0 && rev !=1){
+        throw std::invalid_argument("ERROR: Invalid argument for rev \n rev=1 clockwise direction and 0 otherwise "); 
+    }
+    this->rev=rev;
+    if (a>b){
+        this->rev=1;
+        this->a=b;
+        this->b=a;
+    }else{
+        this->a=a;
+        this->b=b;
+    }
     vertical=vert;
     x1=coord;
-    this->a=a;
-    this->b=b;
-    this->rev=rev;
     length=integrate(a,b);
 }
 

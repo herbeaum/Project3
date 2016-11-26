@@ -12,7 +12,7 @@ class Curve : public Curvebase{
 public:
     Curve();
     Curve(const Curve& orig);
-    Curve(double a, double b, int rev);
+    Curve(double a, double b, int rev= 0);
     virtual ~Curve();
     
     virtual double xp(double p);

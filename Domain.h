@@ -36,10 +36,11 @@ private:
     Curvebase *sides[4];
     int m_, n_;
     double x00,x01,x20,x21,y00,y01,y20,y21;
-
-    bool check_consistency()const;
+    
+    bool check_consistency();
     double phi1(double p)const;
     double phi2(double p)const;
+    bool check(double a, double b, double tol);
 
 };
 
