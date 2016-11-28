@@ -16,7 +16,7 @@ using namespace std;
 // Ordinary constructor
 Line::Line(bool vert,double coord,double a,double b,int rev){
     if (rev != 0 && rev !=1){
-        throw nvalid_argument("ERROR: Invalid argument for rev \n rev=1 clockwise direction and 0 otherwise "); 
+        throw invalid_argument("ERROR: Invalid argument for rev \n rev=1 clockwise direction and 0 otherwise "); 
     }
     this->rev=rev;
     if (a>b){

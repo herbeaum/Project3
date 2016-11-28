@@ -22,7 +22,7 @@ public:
     // Constructors //
     //////////////////
     /*
-    * A constructor taking the four Curvebase 
+    * A constructor taking the four Curvebase in anticlockwise direction
     */
     
     Domain(Curvebase & c1, Curvebase & c2, Curvebase & c3, Curvebase & c4);
