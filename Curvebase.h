@@ -7,46 +7,57 @@
 
 #ifndef CURVEBASE_H
 #define	CURVEBASE_H
+
+// C++ libraries
 #include <stdexcept>
-#include <cmath> 
-#include <stdio.h>
-#include <stdlib.h>
 #include <iostream>
 
+// C libraries
+#include <stdio.h>
+#include <stdlib.h>
+#include <cmath> 
+
 class Curvebase {
+
 protected:
-    double a;
-    double b;
-    int rev;
-    double length;
-    virtual double xp(double p) = 0;
-    virtual double yp(double p) = 0;
-    virtual double dxp(double p) = 0;
-    virtual double dyp(double p) = 0;
-    double f(double q);
-    double integrate(double a, double b);
+	// Inheritable attrubutes
+	double a;
+	double b;
+	int rev;
+	double length;
+
+	// Parametrized coordinates and their derivatives
+	virtual double xp(double p) = 0;
+	virtual double yp(double p) = 0;
+	virtual double dxp(double p) = 0;
+	virtual double dyp(double p) = 0;
+
+	// The integration function and the function
+	// to be integrated
+	double f(double q);
+	double integrate(double a, double b);
+
 public:
 
-    Curvebase() : a(0.0), b(0.0), rev(0.0), length(0.0) {
-    };
-    Curvebase(const Curvebase& orig);
-    double x(double s);
-    double y(double s);
-    virtual ~Curvebase();
+	// Constructors
+	Curvebase() : a(0.0), b(0.0), rev(0.0), length(0.0) {};
+	Curvebase(const Curvebase& orig);
 
-    /**/
-    double getLength() {
-        return length;
-    }
-    /**/
+	// Destructor
+	virtual ~Curvebase();
+
+	// Coordinates in the original domain
+	double x(double s);
+	double y(double s);
+
 private:
-    double integrate(double a, double b, double tol);
-    double Newton(double s, double x, double pres);
-    double iFunc(double a, double b);
-    double i2Func(double a, double b);
-    double f_p(double p, double s);
+	// Internal functions
+	double integrate(double a, double b, double tol);
+	double Newton(double s, double x, double pres);
+	double iFunc(double a, double b);
+	double i2Func(double a, double b);
+	double f_p(double p, double s);
 
 };
 
 #endif	/* CURVEBASE_H */
-

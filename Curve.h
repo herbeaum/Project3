@@ -7,21 +7,31 @@
 
 #ifndef CURVE_H
 #define	CURVE_H
+
+// Header file of inherited class
 #include "Curvebase.h"
+
+// Class skeleton
 class Curve : public Curvebase{
+
 public:
-    Curve();
-    Curve(const Curve& orig);
-    Curve(double a, double b, int rev= 0);
-    virtual ~Curve();
-    
-    virtual double xp(double p);
-    virtual double yp(double p);
-    virtual double dxp(double p);
-    virtual double dyp(double p);
+
+	// Constructors
+	Curve();
+	Curve(const Curve& orig);
+	Curve(double a, double b, int rev = 0);
+
+	// Destructor
+	virtual ~Curve();
+
+	// Parametrized coordinates and their derivatives
+	virtual double xp(double p);
+	virtual double yp(double p);
+	virtual double dxp(double p);
+	virtual double dyp(double p);
+
 private:
 
 };
 
 #endif	/* CURVE_H */
-

@@ -7,23 +7,33 @@
 
 #ifndef LINE_H
 #define	LINE_H
+
+// Header file of inherited class
 #include "Curvebase.h"
-class Line: public Curvebase{
+
+// Class skeleton
+class Line: public Curvebase {
+
 public:
 
-    Line(bool vert,double coord,double a,double b,int rev);
-    Line(const Line& orig);
-    virtual ~Line();
-    
-    virtual double xp(double p);
-    virtual double yp(double p);
-    virtual double dxp(double p);
-    virtual double dyp(double p);
+	// Constructors
+	Line(bool vert,double coord,double a,double b,int rev);
+	Line(const Line& orig);
+
+	// Destructor
+	virtual ~Line();
+
+	// Parametrized coordinates and their derivatives
+	virtual double xp(double p);
+	virtual double yp(double p);
+	virtual double dxp(double p);
+	virtual double dyp(double p);
+
 private:
-    bool vertical;
-    double x1;
+	// Internal variables
+	bool vertical;
+	double x1;
 
 };
 
 #endif	/* LINE_H */
-

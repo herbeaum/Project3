@@ -5,18 +5,19 @@
  * Created on November 7, 2016, 2:41 PM
  */
 
-
-
+// Header file
 #include "Curvebase.h"
 
+// Open the std namespace
 using namespace std;
 
-Curvebase::Curvebase(const Curvebase& orig) {
-}
+// Copy constructor
+Curvebase::Curvebase(const Curvebase& orig) {}
 
-Curvebase::~Curvebase() {
-}
+// Destructor
+Curvebase::~Curvebase() {}
 
+// The Newton function
 double Curvebase::Newton(double s, double p, double pres) {
     double err, tol = pres, x1;
     double x = p;
@@ -35,10 +36,14 @@ double Curvebase::Newton(double s, double p, double pres) {
     return x1;
 }
 
+// A simple function that calls the integrate function
+// with a default tolerance value of 1e-8
 double Curvebase::integrate(double a, double b) {
     integrate(a, b, 1e-8);
 }
 
+// The integrate function. Approximates the integral of f
+// from a to b, with a tolerance value given by tol
 double Curvebase::integrate(double a, double b, double tol) {
     // Arguments check
     if (tol <= 0) {
@@ -111,7 +116,6 @@ double Curvebase::integrate(double a, double b, double tol) {
 // A function that takes two doubles and returns
 // some sort of weighted average of the function
 // over the interval between these two doubles
-
 double Curvebase::iFunc(double a, double b) {
     return (b - a) * (f(a) + 4 * f((a + b) / 2) + f(b)) / 6;
 }
@@ -120,20 +124,23 @@ double Curvebase::iFunc(double a, double b) {
 // sum of the results of calling the function iFunc
 // over the two halves of the interval between
 // these two doubles
-
 double Curvebase::i2Func(double a, double b) {
     double gamma = (a + b) / 2;
     return iFunc(a, gamma) + iFunc(gamma, b);
 }
 
+// The function f to integrate
 double Curvebase::f(double q) {
     return sqrt(dxp(q) * dxp(q) + dyp(q) * dyp(q));
 }
 
+// The function representing the equation to
+// be solved
 double Curvebase::f_p(double p, double s) {
     return integrate(a, p) - s*length;
 }
 
+// x coordinate given s in the original domain
 double Curvebase::x(double s) {
     if ((s < 0) || (s > 1)) {
         throw std::invalid_argument("s in [0,1]");
@@ -142,6 +149,7 @@ double Curvebase::x(double s) {
     return xp(p);
 }
 
+// y coordinate given s in the original domain
 double Curvebase::y(double s) {
     if ((s < 0) || (s > 1)) {
         throw std::invalid_argument("s in [0,1]");
